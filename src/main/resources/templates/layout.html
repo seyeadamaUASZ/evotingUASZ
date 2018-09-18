@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+ <meta charset="utf-8"/>
+ <title>Election</title>
+ <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css"
+       th:href="@{css/bootstrap.min.css}"/>
+ <link rel="stylesheet" type="text/css" href="../static/css/font-awesome.min.css"
+       th:href="@{css/font-awesome.min.css}"/>
+ <link rel="stylesheet" type="text/css" href="../static/css/style.css"
+       th:href="@{css/style.css}"/>
+</head>
+<body>
+<!--<header>
+ <div class="navbar navbar-inverse">
+  <div class="container-fluid">
+   <ul class="nav navbar-nav">
+    <i class="fa fa-user"></i><li><a th:href="@{candidats}">Candidats</a></li>
+    <li><i class="fa fa-user"></i><a  th:href="@{electeurs}">electeurs</a></li>
+    <li><i class="fa fa-cog"></i><a  th:href="@{elections}">elections</a></li>
+    <li><i class="fa fa-cog"></i><a th:href="@{postes}">postes</a></li>
+    <li><i class="fa fa-bar-chart"></i><a th:href="@{avance_vote}">Tendance votes</a></li>
+   </ul>
+   <ul class="nav navbar-nav navbar-right">
+    <li><a class="pull-right" th:href="@{/logout}"><span class=" btn btn-primary glyphicon glyphicon-log-out">Deconnexion</span></a></li>
+   </ul>
+  </div>
+
+ </div>
+
+</header>-->
+
+<div id="wrapper" class="animate">
+ <nav class="navbar header-top fixed-top navbar-expand-lg  navbar-dark bg-dark">
+  <span class="navbar-toggler-icon leftmenutrigger"></span>
+  <i class="fa fa-user-circle"></i><a class="navbar-brand" href="#"></a>
+  <a class=" text-xl-center" style="color: white;"><img src="../static/images/candidat.png" th:src="@{images/candidat.png}" class="img-fluid" width="30" height="30"/></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText"
+          aria-expanded="false" aria-label="Toggle navigation">
+   <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+   <ul class="navbar-nav animate side-nav">
+    <li class="nav-item">
+     <a class="nav-link" th:href="@{menu_superviseur}"><i class="fa fa-home"></i> Home
+      <span class="sr-only">(current)</span>
+     </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" th:href="@{candidats}"><i class="fa fa-user-circle"></i>Candidats</a>
+    </li>
+    <li class="nav-item">
+     <a class="nav-link" th:href="@{electeurs}"> <i class="fa fa-user-circle"></i>Electeurs</a>
+    </li>
+    <li class="nav-item">
+     <a class="nav-link" th:href="@{elections}"> <i class="fa fa-cog"></i>Elections</a>
+    </li>
+    <li class="nav-item">
+     <a class="nav-link" th:href="@{postes}"> <i class="fa fa-cog"></i>Postes</a>
+    </li>
+    <li class="nav-item">
+     <a class="nav-link" th:href="@{avance_vote}"> <i class="fa fa-area-chart"></i>Avancee vote</a>
+    </li>
+   </ul>
+   <ul class="navbar-nav ml-md-auto d-md-flex">
+    <li class="nav-item">
+     <a class="nav-link" href="#">Home
+      <span class="sr-only">(current)</span>
+     </a>
+    </li>
+    <li class="nav-item">
+     <a class="nav-link" href="#">Top Menu Items</a>
+    </li>
+    <li class="nav-item"><a class="nav-link" th:href="@{/logout}"><i class="fa fa-power-off"></i>Deconnexion</a>
+    </li>
+   </ul>
+  </div>
+ </nav>
+</div>
+<section layout:fragment="content">
+
+</section>
+
+
+<footer class="navbar-fixed-bottom">
+ <hr/>
+
+ <div class="container">
+  <small>
+   Systeme E-Voting UASZ-@2018
+  </small>
+ </div>
+</footer>
+<script>
+    $( document ).ready(function() {
+        $('.leftmenutrigger').on('click', function (e) {
+            $('.side-nav').toggleClass("open");
+            e.preventDefault();
+        })
+    });
+</script>
+
+</body>
+</html>

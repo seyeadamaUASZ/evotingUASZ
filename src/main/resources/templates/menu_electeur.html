@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Menu-electeur</title>
+    <script type="text/javascript" src="../static/js/jquery.min.js" th:src="@{js/jquery.min.js}"></script>
+    <script type="text/javascript" src="../static/js/bootstrap.min.js" th:src="@{js/bootstrap.min.js}"></script>
+    <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css"
+          th:href="@{css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" href="../static/css/font-awesome.min.css"
+    th:href="@{css/font-awesome.min.css}"/>
+    <link rel="stylesheet" href="../static/css/all.min.css" th:href="@{css/all.min.css}"/>
+    <link rel="stylesheet" href="../static/css/sb-admin.css" th:href="@{css/sb-admin.css}"/>
+    <link rel="stylesheet" type="text/css" href="../static/css/style.css"
+          th:href="@{css/style.css}"/>
+</head>
+<body>
+<div id="wrapper" class="animate">
+    <nav class="navbar header-top fixed-top navbar-expand-lg  navbar-dark bg-dark">
+        <span class="navbar-toggler-icon leftmenutrigger"></span>
+        <i class="fa fa-user-circle"></i><a class="navbar-brand" href="#"></a>
+        <a class=" text-xl-center" style="color: white;"><img src="../static/images/candidat.png" th:src="@{images/candidat.png}" class="img-fluid" width="30" height="30"/></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav animate side-nav">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{menu_electeur}"><i class="fa fa-home"></i> Home
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <div class="dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="depo" data-toggle="dropdown"><i class="fa fa-user-circle"></i>Deposer Candidature</a>
+                        <ul class="dropdown-menu" style="background: black">
+                            <a class="dropdown-item formC" href="#" style="color: white">PER</a>
+                            <a class="dropdown-item formCaA" href="#" style="color:white">PATS</a>
+                            <a class="dropdown-item formCa" href="#" style="color: white">Etudiant</a>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/candidatBUser}" id="eff"> <i class="fa fa-user-circle"></i>Effectuer vote</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-md-auto d-md-flex">
+                <li class="nav-item">
+                    <a class="nav-link fa fa-bell nbtn"  th:text="${nombre}"></a>
+                </li>
+                <li class="nav-item">
+
+                </li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/logout}"><i class="fa fa-power-off"></i>Deconnexion</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+<div class="container-fluid">
+<div class="container col-md-1 col-md-offset-1">
+   <img class='img-circle img-responsive center-block' src="../static/images/logo.png" th:src="@{images/logo.png}"/>
+</div>
+    <hr>
+    <center><p> <a href="#" style="color:black;" class="fol"><b>E-Voting</b> <b>-UASZ</b></a></p></center>
+<div class="container-fluid" style="margin-top: 90px">
+    <div class="row col-md-12">
+        <div class="col-xl-4 col-sm-6 mb-5">
+            <div class="card text-white bg-primary o-hidden h-100">
+                <div class="card-body">
+                    <div class="card-body-icon">
+                        <i class="fas fa-fw fa-life-ring"></i>
+                    </div>
+                    <div class="mr-5">Election ouverte :</div>
+                    <label style="font-weight: bold;" th:text="${electionOuvert.nomElection}"></label>
+                </div>
+                <a class="card-footer text-white clearfix small z-1 ninfo" href="#">
+                    <span class="float-left">plus de detail</span>
+                    <span class="float-right">
+                    <i class="fas fa-angle-right"></i>
+                  </span>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-xl-4 col-sm-6 mb-5">
+            <div class="card text-white bg-success o-hidden h-100">
+                <div class="card-body">
+                    <div class="card-body-icon">
+                        <i class="fas fa-fw fa-life-ring"></i>
+                    </div>
+                    <div class="mr-5">Compte à rebours</div>
+                    <p class="card-text" id="compte"></p>
+                </div>
+                <a class="card-footer text-white clearfix small z-1" href="#">
+                    <span class="float-left">plus de detail</span>
+                    <span class="float-right">
+                    <i class="fas fa-angle-right"></i>
+                  </span>
+                </a>
+            </div>
+        </div>
+        <div class="col-xl-4 col-sm-6 mb-5">
+        <div class="card text-white bg-warning o-hidden h-100">
+            <div class="card-body">
+                <div class="card-body-icon">
+                    <i class="fas fa-fw fa-toolbox"></i>
+                </div>
+                <div class="mr-5">A propos du système!</div>
+            </div>
+            <a class="card-footer text-white clearfix small z-1" href="#">
+                <span class="float-left">voir manuel d'utilisation</span>
+                <span class="float-right">
+                    <i class="fas fa-angle-right"></i>
+                  </span>
+            </a>
+        </div>
+    </div>
+
+
+    </div>
+
+</div>
+
+<div class="myFormC">
+    <form th:action="@{/saveCandidat}" method="post" enctype="multipart/form-data">
+        <div class="modal fade" id="exampleModalFormc" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalForm">Depot de Candidature</h5>
+                        <img src="../static/images/logo.png" th:src="@{images/logo.png}" width="30" height="30"/>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <header>
+                            <div>
+                                <img src="../static/images/logo.png" th:src="@{images/logo.png}"
+                                     width="70" height="70"/>
+                                <h3 class="pull-right" style="color: #4cae4c">Université Assane SECK de Ziguinchor</h3>
+                            </div>
+                            <div>
+                                <h3 class="hole2">Formulaire de Dépot Candidature</h3>
+                            </div>
+                        </header>
+                        <hr/>
+                        <div class="form-group">
+                            <label class="control-label">Name: </label>
+                            <input class="form-control" type="text" name="name"/>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Email: </label>
+                            <input class="form-control" type="email" name="username"/>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Password: </label>
+                            <input class="form-control" type="password" name="password"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label">Profession: </label>
+                            <!--<input class="form-control" type="text" name="profession" th:value="${candidat.profession}"/>-->
+                            <!---->
+                            <select class="form-control" type="text" name="profession">
+                                <option value="enseignant">enseignant</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label">Election: </label>
+                            <select class="form-control" type="text" name="election.idElection">
+                                <option th:each="election:${elections}" th:value="${election.idElection}" th:text="${election.nomElection}"></option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label">Departement: </label>
+                            <select class="form-control" type="text" name="departement.idDep">
+                                <option value="" checked="true"></option>
+                                <option th:each="departement:${departements}" th:value="${departement.idDep}" th:text="${departement.nomDep}"></option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label">Photo: </label>
+                            <input class="form-control" type="file" name="file"/>
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok">Save</span></button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+<div class="myFormCa">
+    <form th:action="@{/saveCandidat}" method="post" enctype="multipart/form-data">
+        <div class="modal fade" id="exampleModalFormCE" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabelCE">Depot de Candidature</h5>
+                        <img src="../static/images/logo.png" th:src="@{images/logo.png}" width="30" height="30"/>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <header>
+                            <div>
+                                <img src="../static/images/logo.png" th:src="@{images/logo.png}"
+                                     width="70" height="70"/>
+                                <h3 class="pull-right" style="color: #4cae4c">Université Assane SECK de Ziguinchor</h3>
+                            </div>
+                            <div>
+                                <h3 class="hole2">Formulaire de Dépot Candidature</h3>
+                            </div>
+                        </header>
+                        <hr/>
+                        <div class="form-group">
+                            <label class="control-label">Name: </label>
+                            <input class="form-control" type="text" name="name"/>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Email: </label>
+                            <input class="form-control" type="email" name="username"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label">Password: </label>
+                            <input class="form-control" type="password" name="password"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label">Profession: </label>
+                            <!--<input class="form-control" type="text" name="profession" th:value="${candidat.profession}"/>-->
+                            <!---->
+                            <select class="form-control" type="text" name="profession">
+                                <option value="etudiant">etudiant</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label">Election: </label>
+                            <select class="form-control" type="text" name="election.idElection">
+                                <option th:each="election:${elections}" th:value="${election.idElection}" th:text="${election.nomElection}"></option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label">Departement: </label>
+                            <select class="form-control" type="text" name="departement.idDep">
+                                <option value="" checked="true"></option>
+                                <option th:each="departement:${departements}" th:value="${departement.idDep}" th:text="${departement.nomDep}"></option>
+                            </select>
+                        </div>
+
+                        <!--<div class="form-group">-->
+                            <!--<label class="control-label">Filiere: </label>-->
+                            <!--<select class="form-control" type="text" name="filiere.idFiliere">-->
+                                <!--<option value="" checked="true">null</option>-->
+                                <!--<option th:each="filiere:${filieres}" th:value="${filiere.idfiliere}" th:text="${filiere.nomFiliere}"></option>-->
+                            <!--</select>-->
+                        <!--</div>-->
+
+                        <div class="form-group">
+                            <label class="control-label">Niveau: </label>
+                            <select class="form-control" type="text" name="niveau.idNiv">
+                                <option value="" checked="true">null</option>
+                                <option th:each="niveau:${niveaus}" th:value="${niveau.idNiv}" th:text="${niveau.nomNiveau}"></option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label">Photo: </label>
+                            <input class="form-control" type="file" name="file"/>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok">Save</span></button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="myFormCaA">
+    <form  th:action="@{/saveCandidat}" method="post" enctype="multipart/form-data">
+        <div class="modal fade" id="exampleModalFormCaa" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabelCaa">Depot de Candidature</h5>
+                        <img src="../static/images/logo.png" th:src="@{images/logo.png}" width="30" height="30"/>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <header>
+                            <div>
+                                <img src="../static/images/logo.png" th:src="@{images/logo.png}"
+                                     width="70" height="70"/>
+                                <h3 class="pull-right" style="color: #4cae4c">Université Assane SECK de Ziguinchor</h3>
+                            </div>
+                            <div>
+                                <h3 class="hole2">Formulaire de Dépot Candidature</h3>
+                            </div>
+                        </header>
+                        <hr/>
+                        <div class="form-group">
+                            <label class="control-label">Name: </label>
+                            <input class="form-control" type="text" name="name"/>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Email: </label>
+                            <input class="form-control" type="email" name="username"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label">Password: </label>
+                            <input class="form-control" type="password" name="password"/>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Profession: </label>
+                            <!--<input class="form-control" type="text" name="profession" th:value="${candidat.profession}"/>-->
+                            <!---->
+                            <select class="form-control" type="text" name="profession">
+                                <option value="enseignant">enseignant</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Election: </label>
+                            <select class="form-control" type="text" name="election.idElection">
+                                <option th:each="election:${elections}" th:value="${election.idElection}" th:text="${election.nomElection}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Service: </label>
+                            <select class="form-control" type="text" name="service.idService">
+                                <option value="" checked="true"></option>
+                                <option th:each="service:${services}" th:value="${service.idService}" th:text="${service.nomService}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Photo: </label>
+                            <input class="form-control" type="file" name="file"/>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok">Save</span></button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<div class="myForm">
+    <form  method="get">
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Notifications</h5>
+                        <img src="../static/images/logo.png" th:src="@{images/logo.png}" width="30" height="30"/>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="message" class="col-form-label">message:</label>
+                            <textarea th:each="notif : ${notifications}" class="form-control" id="message" name="message" value="" th:text="${notif.message}" readonly></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+    <div class="modal fade" id="exampleModalinfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabelinfo">A propos de l'election</h5>
+                    <img src="../static/images/logo.png" th:src="@{images/logo.png}" width="30" height="30"/>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div><p class="card-text" th:text="${electionOuvert.description}"></p></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+</div>
+<script>
+     $(document).ready(function () {
+         $('.nbtn').on('click',function (event) {
+             event.preventDefault();
+             $('.myForm #exampleModal').modal();
+         });
+         $('.formC').on('click',function (event) {
+             event.preventDefault();
+             $('.myFormC #exampleModalFormc').modal();
+         });
+         $('.ninfo').on('click',function (event) {
+           event.preventDefault();
+           $('#exampleModalinfo').modal();
+         });
+         $('.formCa').on('click',function (event) {
+           event.preventDefault();
+           $('.myFormCa #exampleModalFormCE').modal();
+         });
+         $('.formCaA').on('click',function (event) {
+             event.preventDefault();
+             $('.myFormCaA #exampleModalFormCaa').modal();
+         });
+         $('.leftmenutrigger').on('click', function (e) {
+             $('.side-nav').toggleClass("open");
+             e.preventDefault();
+         })
+     });
+
+    /*$('nav li').hover(
+        function() {
+            $('ul', this).stop().slideDown(200);
+        },
+        function() {
+            $('ul', this).stop().slideUp(200);
+        }
+    );*/
+
+     //compte à rebours
+    var affiche = document.getElementById("compte");
+    function Rebour() {
+        var date1 = new Date();
+        var date2 = new Date("Sept 08 14:59:00 2018");
+        var sec = (date2 - date1)/1000;
+        var n = 24 * 3600;
+        if(sec > 0){
+            $('#eff').hide();
+            j = Math.floor(sec/n);
+            h = Math.floor((sec - (j*n))/3600);
+            mn = Math.floor ((sec - ((j * n + h * 3600))) / 60);
+            sec = Math.floor (sec - ((j * n + h * 3600+ mn * 60)));
+            affiche.innerHTML = "Ouverture du scrutin dans : " + j +" j "+ h +" h "+ mn +" min "+ sec + " s ";
+            window.status = "Ouverture du scrutin dans : " + j +" j "+ h +" h "+ mn +" min "+ sec + " s ";
+
+        }else {
+            $('#depo').hide();
+            $('#eff').show();
+            affiche.innerHTML ="Ouverture du scrutin de vote !!";
+            window.status = "Ouverture du scrutin de vote !!";
+        }
+        tRebour=setTimeout ("Rebour();", 1000);
+    }
+     Rebour();
+
+</script>
+</body>
+</html>

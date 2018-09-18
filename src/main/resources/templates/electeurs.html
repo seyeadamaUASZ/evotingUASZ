@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org" xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorator="layout">
+<head>
+<meta charset="utf-8">
+<title>electeurs</title>
+<script type="text/javascript" src="../static/js/jquery.min.js" th:src="@{js/jquery.min.js}"></script>
+<script type="text/javascript" src="../static/js/bootstrap.min.js" th:src="@{js/bootstrap.min.js}"></script>
+    <script type="text/javascript" src="../static/js/jquery.dataTables.min.js" th:src="@{js/jquery.dataTables.min.js}"></script>
+<link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css"
+th:href="@{css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" href="../static/css/font-awesome.min.css"
+          th:href="@{css/font-awesome.min.css}"/>
+<link rel="stylesheet" type="text/css" href="../static/css/style.css" 
+th:href="@{css/style.css}"/>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container col-md-1 col-md-offset-1">
+        <a href="#"><img id='image' class='img-circle img-responsive center-block' src="../static/images/logo.png" th:src="@{images/logo.png}" width="100" height="100"/></a>
+    </div>
+    <hr>
+    <center><p> <a href="#" style="color:black;" class="fol"><b>E-Voting</b> <b>-UASZ</b></a></p></center>
+<div class="container col-md-12" style="margin-top: 2px">
+<div class="card">
+<div class="card-header">Electeurs</div>
+    <form th.action="@{electeurs}" method="get">
+        <label>cles: </label>
+        <input type="text" name="mc" th:value="${mc}"/>
+        <button class="btn btn-primary">Chercher</button>
+    </form>
+  <div class="card-body">
+  <table class="table table-bordered table-striped" id="example">
+    <thead>
+    <tr style="background-color: #4cae4c">
+        <th>Id</th><th>Name</th><th>profession</th><th>Departement</th><th>type_electeur</th><th>Actions</th>
+    </tr>
+    </thead>
+    
+    <tbody>
+    <tr th:each="electeur : ${electeurs}">
+      <td th:text="${electeur.idUser}"></td>
+      <td th:text="${electeur.name}"></td>
+      <td th:text="${electeur.profession}"></td>
+      <td th:text="${electeur.departement.nomDep}"></td>
+        <td th:text="${electeur.typeElecteur}"></td>
+    <td><a th:href="@{getElecteur/(id=${electeur.idUser})}" class="btn btn-primary vbtn"><i class="fa fa-eye"></i></a></td>
+    </tr>
+    
+    </tbody>
+  
+  </table>
+
+  </div>
+    <div class="container">
+        <ul class="nav nav-pills">
+            <li th:class="${pageCourante==status.index}?'active':''" th:each="pa,status:${pages}">
+                <a class="btn btn-primary" th:href="@{electeurs(page=${status.index},size=${size},mc=${mc})}" th:text="${status.index}"></a>|
+            </li>
+        </ul>
+    </div>
+
+</div>
+    <div class="myForm">
+        <form th:action="@{save}" method="post">
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Information electeur</h5>
+                            <img src="../static/images/logo.png" th:src="@{images/logo.png}" width="30" height="30"/>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="form-group">
+                                <label for="idUser" class="col-form-label">IDentifiant:</label>
+                                <input  class="form-control" id="idUser" name="idUser" value="" readonly/>
+                            </div>
+                            <div class="form-group">
+                                <label for="name" class="col-form-label">Name:</label>
+                                <input type="text" class="form-control" id="name" name="name" value="" readonly/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="profession" class="col-form-label">Profession:</label>
+                                <input type="text" class="form-control" id="profession" name="profession" value="" readonly/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="departement.nomDep" class="col-form-label">Departement:</label>
+                                <input type="text" class="form-control" id="departement.nomDep" name="departement.nomDep" value="" readonly/>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+
+<script>
+  $(document).ready(function () {
+      $('.vbtn').on('click',function(event){
+          event.preventDefault();
+          var href=$(this).attr('href');
+          $.get(href,function(electeur,status){
+            $('.myForm #idUser').val(electeur.idUser);
+            $('.myForm #name').val(electeur.name);
+            $('.myForm #profession').val(electeur.profession);
+            $('.myForm #departement.nomDep').val(electeur.departement.nomDep)
+          })
+          $('.myForm #exampleModal').modal();
+      })
+  });
+</script>
+  </div>
+</body>
+</html>

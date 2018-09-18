@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorator="layout">
+<head>
+<meta charset="utf-8"/>
+<title>Election</title>
+<script type="text/javascript" src="../static/js/jquery.min.js" th:src="@{js/jquery.min.js}"></script>
+<script type="text/javascript" src="../static/js/bootstrap.min.js" th:src="@{js/bootstrap.min.js}"></script>
+<link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css"
+th:href="@{css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" href="../static/css/font-awesome.min.css"
+          th:href="@{css/font-awesome.min.css}"/>
+<link rel="stylesheet" type="text/css" href="../static/css/style.css" 
+th:href="@{css/style.css}"/>
+</head>
+<body>
+<div layout:fragment="content" style="margin-top: 5px;">
+    <div class="container col-md-1 col-md-offset-1">
+        <a href="#"><img id='image' class='img-circle img-responsive center-block' src="../static/images/logo.png" th:src="@{images/logo.png}" width="100" height="100"/></a>
+    </div>
+    <hr>
+    <center><p> <a href="#" style="color:black;" class="fol"><b>E-Voting</b> <b>-UASZ</b></a></p></center>
+<div class="container col-md-12" style="margin-top: 3px">
+<div class="card">
+<div class="card-header">
+  <a class="btn btn-primary nbtn"><i class="fa fa-save"></i>Parametrer Election</a>
+</div>
+  <div class="card-body">
+  <table class="table table-bordered table-striped">
+    <thead>
+    <tr style="background-color: #4cae4c">
+    <th>Id</th><th>Nom_Election</th><th>Date</th><th>Poste brigué</th> <th>Type_electeur</th><th>ouvert</th><th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="election : ${elections}">
+        <td th:text="${election.idElection}"></td>
+        <td th:text="${election.nomElection}"></td>
+        <td th:text="${election.dateElection}"></td>
+        <td th:text="${election.poste.nomPoste}"></td>
+        <td th:text="${election.electeurCible}"></td>
+        <td class="bg-warning" th:text="${election.ouvert}"></td>
+    <td><a th:href="@{getElection/(id=${election.idElection})}" class="btn btn-primary act">act/desac</a>
+    </tr>
+    
+    </tbody>
+  
+  </table>
+  </div>
+</div>
+
+  <div class="myForm">
+    <form th:action="@{/saveElection}" method="post">
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Parametrer</h5>
+                <img src="../static/images/logo.png" th:src="@{images/logo.png}" width="30" height="30"/>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="idElection" class="col-form-label">Identifiant:</label>
+                    <input  class="form-control" id="idElection" name="idElection" value="" readonly/>
+                </div>
+
+              <div class="form-group">
+                <label for="nomElection" class="col-form-label">Election:</label>
+                <input  class="form-control" id="nomElection" name="nomElection" value=""/>
+              </div>
+              <div class="form-group">
+                <label for="dateElection" class="col-form-label">Date:</label>
+                <input type="datetime-local" class="form-control" id="dateElection" name="dateElection" value=""/>
+              </div>
+
+                <div class="form-group">
+                    <label for="electeurCible" class="col-form-label">Electeur ciblé:</label>
+                    <input type="text" class="form-control" id="electeurCible" name="electeurCible" value=""/>
+                </div>
+                <div class="form-group">
+                    <label for="description" class="col-form-label">Description:</label>
+                    <textarea type="text" class="form-control" id="description" name="description" value=""></textarea>
+                </div>
+                <div class="form-group">
+                    <label  class="col-form-label">Poste:</label>
+                    <select type="text" class="form-control" id="poste.idPoste" name="poste.idPoste">
+                        <option th:each="poste : ${postes}" th:value="${poste.idPoste}" th:text="${poste.nomPoste}"></option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="ouvert" class="col-form-label">Ouvert:</label>
+                    <select type="text" class="form-control" id="ouvert" name="ouvert">
+                        <option value="true">ouvert</option>
+                        <option value="false">Fermé</option>
+                    </select>
+                    <!--<input type="text" class="form-control" id="ouvert" name="ouvert" value=""/>-->
+                </div>
+            </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                  <input type="submit" class="btn btn-primary" value="save"/>
+              </div>
+          </div>
+          </div>
+        </div>
+      </form>
+      </div>
+
+    <!--modal pour ouvrir une election -->
+
+  </div>
+    <script>
+        $(document).ready(function () {
+            $('.nbtn, .table .act').on('click',function (event) {
+                event.preventDefault();
+                var href = $(this).attr('href');
+                var text = $(this).text();
+                if(text=='act/desac'){
+                    $.get(href,function(election){
+                       $('.myForm #idElection').val(election.idElection);
+                       $('.myForm #nomElection').val(election.nomElection);
+                       $('.myForm #dateElection').val(election.dateElection);
+                       $('.myForm #electeurCible').val(election.electeurCible);
+                       $('.myForm #description').val(election.description);
+                       $('.myForm #ouvert').val(election.ouvert);
+                    })
+                    $('.myForm #exampleModal').modal();
+                }else{
+                    $('.myForm #idElection').val('');
+                    $('.myForm #nomElection').val('');
+                    $('.myForm #dateElection').val('');
+                    $('.myForm #electeurCible').val('');
+                    $('.myForm #description').val('');
+                    $('.myForm #poste.idPoste').val('');
+                    $('.myForm #ouvert').val('');
+                    $('.myForm #exampleModal').modal();
+                }
+
+
+            })
+        });
+    </script>
+</div>
+
+</body>
+</html>

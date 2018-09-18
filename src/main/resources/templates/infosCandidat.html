@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Fiche d'info</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css"
+          th:href="@{css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" href="../static/css/font-awesome.min.css"
+          th:href="@{css/font-awesome.min.css}"/>
+    <link rel="stylesheet" type="text/css" href="../static/css/style.css"
+          th:href="@{css/style.css}"/>
+
+    <style>
+        table {
+            border: medium solid black;
+            border-collapse: collapse;
+            width: 50%;
+            margin:auto;
+        }
+        th {
+            font-family: monospace;
+            border: thin solid black;
+            width: 50%;
+            padding: 5px;
+            background-color: #4cae4c;
+        }
+        td {
+            font-family: sans-serif;
+            border: thin solid #6495ed;
+            width: 50%;
+            padding: 5px;
+            text-align: center;
+            background-color: #ffffff;
+        }
+        caption {
+            font-family: sans-serif;
+        }
+    </style>
+</head>
+<body>
+     <!--<div class="container">
+         <div class="card">
+             <div class="card-header">Fiche d'info</div>
+             <div class="card-body">
+                 <table border="1" class="table table-bordered table-striped">
+                     <thead>
+                     <tr>
+                         <th>Caracteristiques</th><th>Infos</th>
+                     </tr>
+                     </thead>
+                     <tbody>
+                      <tr>
+                          <td>Identifiant: </td>
+                          <td th:text="${candidat.idUser}"></td>
+                      </tr>
+                      <tr>
+                          <td>Nom: </td>
+                          <td th:text="${candidat.name}"></td>
+                      </tr>
+                      <tr>
+                          <td>Email: </td>
+                          <td th:text="${candidat.username}"></td>
+                      </tr>
+                      <tr>
+                          <td>Profession: </td>
+                          <td th:text="${candidat.profession}"></td>
+                      </tr>
+                      <tr>
+                          <td>Election inscrite: </td>
+                          <td th:text="${candidat.election.nomElection}"></td>
+                      </tr>
+                      <tr>
+                          <td>Service ou Departement: </td>
+                          <td th:text="${candidat.departement.nomDep}"></td>
+                      </tr>
+                     </tbody>
+                 </table>
+             </div>
+         </div>
+     </div>-->
+     <table border="1">
+         <caption>Fiche d'information d'un candidat</caption>
+
+         <tr>
+             <th>Caracteristiques</th>
+             <th>Infos</th>
+         </tr>
+
+         <tr>
+             <td>Identifiant</td>
+             <td th:text="${candidat.idUser}"></td>
+         </tr>
+
+         <tr>
+             <td>Nom</td>
+             <td th:text="${candidat.name}"></td>
+         </tr>
+         <tr>
+             <td>Adresse</td>
+             <td th:text="${candidat.adresseU}"></td>
+         </tr>
+         <tr>
+             <td>Email</td>
+             <td th:text="${candidat.username}"></td>
+         </tr>
+
+         <tr>
+             <td>Tel</td>
+             <td th:text="${candidat.telephoneU}"></td>
+         </tr>
+         <tr>
+             <td>Profession</td>
+             <td th:text="${candidat.profession}"></td>
+         </tr>
+         <tr>
+             <td>Election inscrite</td>
+             <td th:text="${candidat.election.nomElection}"></td>
+         </tr>
+         <tr>
+             <td>Dep ou service</td>
+             <td th:text="${candidat.departement.nomDep}"></td>
+         </tr>
+     </table>
+</body>
+</html>

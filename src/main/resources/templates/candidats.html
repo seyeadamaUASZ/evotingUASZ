@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorator="layout">
+<head>
+<meta charset="utf-8" />
+<title>Candidats</title>
+<script type="text/javascript" src="../static/js/jquery.min.js" th:src="@{js/jquery.min.js}"></script>
+<script type="text/javascript" src="../static/js/bootstrap.min.js" th:src="@{js/bootstrap.min.js}"></script>
+
+<link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css"
+th:href="@{css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" href="../static/css/font-awesome.min.css"
+          th:href="@{css/font-awesome.min.css}"/>
+<link rel="stylesheet" type="text/css" href="../static/css/style.css" 
+th:href="@{css/style.css}"/>
+    <link rel="stylesheet" type="text/css" href="../static/css/jquery.dataTables.min.css"
+          th:href="@{css/jquery.dataTables.min.css}"/>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container col-md-1 col-md-offset-1">
+        <a href="#"><img id='image' class='img-circle img-responsive center-block' src="../static/images/logo.png" th:src="@{images/logo.png}" width="100" height="100"/></a>
+    </div>
+    <hr>
+    <center><p> <a href="#" style="color:black;" class="fol"><b>E-Voting</b> <b>-UASZ</b></a></p></center>
+<div class="container col-md-12" style="margin-top: 2px">
+<div class="card">
+<div class="card-header">
+    <a class="btn btn-primary nbtn" th:href="@{/candidatsPrint}"><i class="fa fa-print"></i>Imprime</a>
+</div>
+    <form th.action="@{candidats}" method="get">
+        <label>cles: </label>
+        <input type="text" name="mc" th:value="${mc}"/>
+        <button class="btn btn-primary">Chercher</button>
+    </form>
+  <div class="card-body">
+
+  <table class="table table-bordered table-striped" id="example">
+    <thead>
+    <tr style="background-color: #4cae4c">
+        <th>Id</th><th>Name</th><th>prof</th><th>email</th><th>Dep</th><th>Election</th><th>type_candidat</th><th>action</th>
+    </tr>
+    </thead>
+    
+    <tbody>
+     <tr th:each="candidat : ${candidats}">
+         <td th:text="${candidat.idUser}"></td>
+         <td th:text="${candidat.name}"></td>
+         <td th:text="${candidat.profession}"></td>
+         <td th:text="${candidat.username}"></td>
+         <!--<td><img th:src="@{photoCat/(id=${candidat.idUser})}" width="45" height="45"></td>-->
+         <td th:text="${candidat.departement.nomDep}"></td>
+         <td th:text="${candidat.election.nomElection}"></td>
+         <td th:text="${candidat.type_candidat}"></td>
+         <td><a th:href="@{|getCandidat/${candidat.idUser}|}" class="btn btn-primary"><i class="fa fa-eye"></i></a>|
+         <a th:href="@{deleteCandidat/(id=${candidat.idUser})}" class="btn btn-danger dbtn"><i class="fa fa-trash"></i></a></td>
+    </tr>
+    
+    </tbody>
+  
+  </table>
+  
+  </div>
+
+    <div class="container">
+        <ul class="nav nav-pills">
+            <li th:class="${pageCourante==status.index}?'active':''" th:each="pa,status:${pages}">
+                <a class="btn btn-primary" th:href="@{candidats(page=${status.index},size=${size},mc=${mc})}" th:text="${status.index}"></a> |
+            </li>
+        </ul>
+    </div>
+
+</div>
+    <div class="myForm">
+        <form th:action="@{save}" method="post">
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Information Candidat</h5>
+                            <img src="../static/images/logo.png" th:src="@{images/logo.png}" width="30" height="30"/>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="form-group">
+                                <label for="idUser" class="col-form-label">IDentifiant:</label>
+                                <input  class="form-control" id="idUser" name="idUser" value="" readonly/>
+                            </div>
+                            <div class="form-group">
+                                <label for="name" class="col-form-label">Name:</label>
+                                <input type="text" class="form-control" id="name" name="name" value="" readonly/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="profession" class="col-form-label">Profession:</label>
+                                <input type="text" class="form-control" id="profession" name="profession" value="" readonly/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="username" class="col-form-label">Email:</label>
+                                <input type="text" class="form-control" id="username" name="username" value="" readonly/>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+    <!---Modal delete -->
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLab" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="alert alert-danger">
+                        Voulez-vous retirer ce Candidat ??
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <a href="" class="btn btn-danger" id="delRef">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+    <script>
+        $(document).ready(function () {
+            $('.vbtn').on('click',function(event){
+                event.preventDefault();
+                var href=$(this).attr('href');
+                $.get(href,function(candidat,status){
+                    $('.myForm #idUser').val(candidat.idUser);
+                    $('.myForm #name').val(candidat.name);
+                    $('.myForm #profession').val(candidat.profession);
+                    $('.myForm #username').val(candidat.username)
+                });
+                $('.myForm #exampleModal').modal();
+            });
+            $('.table .dbtn').on('click',function(event){
+                event.preventDefault();
+                var href = $(this).attr('href');
+                $('#myModal #delRef').attr('href',href);
+                $('#myModal').modal();
+            });
+        });
+
+
+    </script>
+</div>
+</body>
+</html>

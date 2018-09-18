@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Menu-Candidat</title>
+    <script type="text/javascript" src="../static/js/jquery.min.js" th:src="@{js/jquery.min.js}"></script>
+    <script type="text/javascript" src="../static/js/bootstrap.min.js" th:src="@{js/bootstrap.min.js}"></script>
+    <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css"
+          th:href="@{css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" href="../static/css/font-awesome.min.css"
+          th:href="@{css/font-awesome.min.css}"/>
+    <link rel="stylesheet" type="text/css" href="../static/css/style.css"
+          th:href="@{css/style.css}"/>
+</head>
+<body>
+<div id="wrapper" class="animate">
+    <nav class="navbar header-top fixed-top navbar-expand-lg  navbar-dark bg-dark">
+        <span class="navbar-toggler-icon leftmenutrigger"></span>
+        <!--<i class="fa fa-user-circle"></i><a class="navbar-brand" href="#"></a>-->
+        <img th:src="@{photoCat/(id=${candidat.idUser})}" width="40" height="40" class="rounded-circle"/>
+        <a class=" text-xl-center" style="color: white;" th:text="${name}"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav animate side-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="fa fa-home"></i> Home
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nbtn" href="#"><i class="fa fa-edit"></i>Modifier mes infos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link dbtn" th:href="@{delete/(id=${candidat.idUser})}"> <i class="fa fa-trash"></i>Retirer ma candidature</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-md-auto d-md-flex">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Home
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Top Menu Items</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/logout}"><i class="fa fa-sign-out"></i>Deconnexion</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+</div>
+
+<!--<nav style="background: black; margin-top: 2px" >
+    <div class="container">
+        <ul class="nav navbar-nav">
+            <li><a class="glyphicon glyphicon-home" href="#">Home</a></li>
+            <li> <a href="#" class="nbtn">Modifier mes informations</a></li>
+            <li><a th:href="@{delete/(id=${candidat.idUser})}" class="dbtn">Retirer ma candidature</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a th:href="@{/logout}" class="btn-primary glyphicon glyphicon-log-out">Deconnexion</a></li>
+            &lt;!&ndash;<li><img class="pull-right img-circle" th:src="@{photoCat/(id=${candidat.idUser})}" width="30" height="30"/></li>&ndash;&gt;
+            <li><a class="glyphicon glyphicon-user" th:text="${name}"></a></li>
+        </ul>
+    </div>
+</nav>-->
+<div class="container col-md-1 col-md-offset-1" style="margin-top: 5px">
+    <img class='img-circle img-responsive center-block' src="../static/images/logo.png" th:src="@{images/logo.png}"/>
+</div>
+<hr>
+<center><p> <a href="#" style="color:black;" class="fol"><b>E-Voting</b> <b>-UASZ</b></a></p></center>
+
+<div class="myForm">
+    <form th:action="@{saveC}" method="post" enctype="multipart/form-data">
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modifier mes infos</h5>
+                        <img src="../static/images/logo.png" th:src="@{images/logo.png}" width="30" height="30"/>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <label for="idUser" class="col-form-label">IDentifiant:</label>
+                            <input  class="form-control" id="idUser" name="idUser" th:value="${candidat.idUser}" readonly/>
+                        </div>
+                        <div class="form-group">
+                            <label for="name" class="col-form-label">Name:</label>
+                            <input type="text" class="form-control" id="name" name="name" th:value="${candidat.name}" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="username" class="col-form-label">Email:</label>
+                            <input type="text" class="form-control" id="username" name="username" th:value="${candidat.username}" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password" class="col-form-label">Password:</label>
+                            <input type="password" class="form-control" id="password" name="password" value="" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="profession" class="col-form-label">Profession:</label>
+                            <input type="text" class="form-control" id="profession" name="profession" th:value="${candidat.profession}" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="type_candidat" class="col-form-label">Profession:</label>
+                            <input type="text" class="form-control" id="type_candidat" name="type_candidat" th:value="${candidat.type_candidat}" />
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label">Departement: </label>
+                            <select class="form-control" type="text" name="departement.idDep">
+                                <option value="" checked="true"></option>
+                                <option th:each="departement:${departements}" th:value="${departement.idDep}" th:text="${departement.nomDep}"></option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="file" class="col-form-label">Photo:</label>
+                            <input type="file" class="form-control" id="file" name="file" th:value="${candidat.photo}" />
+                            <img th:src="@{photoCat/(id=${candidat.idUser})}" width="45" height="45">
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-primary" value="save"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLab" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Confirmation</h5>
+                <img src="../static/images/logo.png" th:src="@{images/logo.png}" width="30" height="30"/>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="alert alert-danger">
+                     Etes-vous sûr de bien vouloir retirer votre candidature??
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <a href="" class="btn btn-danger" id="delRef">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('.nbtn').on('click',function(event){
+             event.preventDefault();
+             $('.myForm #exampleModal').modal();
+        });
+
+        $('.leftmenutrigger').on('click', function(e) {
+            $('.side-nav').toggleClass("open"); e.preventDefault();
+        });
+
+        $('.dbtn').on('click',function (event) {
+            event.preventDefault();
+            var href = $(this).attr('href');
+            $('#myModal #delRef').attr('href',href);
+            $('#myModal').modal();
+        });
+    });
+</script>
+</body>
+</html>

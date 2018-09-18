@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>PV de Resultat</title>
+    <script type="text/javascript" src="../static/js/jquery.min.js" th:src="@{js/jquery.min.js}"></script>
+    <script type="text/javascript" src="../static/js/bootstrap.min.js" th:src="@{js/bootstrap.min.js}"></script>
+
+    <script type="text/javascript" src="../static/js/jquery.dataTables.min.js" th:src="@{js/jquery.dataTables.min.js}"></script>
+    <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.css"
+          th:href="@{css/bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" href="../static/css/style.css"
+          th:href="@{css/style.css}"/>
+</head>
+<body onload="window.print();">
+  <div class="container col-md-6 col-md-offset-3">
+      <header>
+          <div>
+              <img src="../static/images/logo.png" th:src="@{images/logo.png}"
+                   width="70" height="70"/>
+              <h3 class="pull-right" style="color: #4cae4c">Université Assane SECK de Ziguinchor</h3>
+          </div>
+          <div>
+              <h3 id="hole">Procès Verbal de l'élection de désignation du <label id="lab" th:text="${election.poste.nomPoste}"></label></h3>
+          </div>
+          <div>
+              <p>L'an deux milles dix-huits, et le 10 septembre a eu lieu l'élection de
+                  désignation du <label id="lab2" th:text="${election.poste.nomPoste}"></label> d'informatique
+                  de l'université Assane Seck de Ziguinchor de 09 heures à 13 heures au niveau
+                  de la plateforme.Ci-dessous, les statistiques de l'élection sont exprimés:</p>
+          </div>
+      </header>
+      <hr/>
+      <div>
+          <label>Participation vote:</label>
+          <table class="table table-striped table-bordered">
+              <thead>
+              <tr><th>Effectifs</th> <th>Effectifs votant</th></tr>
+              </thead>
+              <tbody>
+              <tr>
+                  <td th:text="${total}"></td>
+                  <td th:text="${nombreV}"></td>
+              </tr>
+              </tbody>
+          </table>
+      </div>
+
+      <div>
+          <label>Liste des candidats</label>
+          <table class="table-bordered table table-striped">
+              <thead>
+              <tr>
+                  <th>Nom</th><th>email</th><th>Profession</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr th:each="candidat: ${candidats}">
+                  <td th:text="${candidat.name}"></td>
+                  <td th:text="${candidat.username}"></td>
+                  <td th:text="${candidat.profession}"></td>
+              </tr>
+              </tbody>
+          </table>
+      </div>
+
+      <div>
+          <label>Liste des resultats</label>
+          <table class="table table-striped table-bordered">
+              <thead>
+              <tr>
+                  <th>Nom</th><th>nombre voix</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr th:each="candidat: ${candidats}">
+                  <td th:text="${candidat.name}"></td>
+                  <td th:text="${candidat.voix}"></td>
+              </tr>
+              </tbody>
+          </table>
+      </div>
+
+      <!---Afficher le gagnant -->
+
+      <div>
+          <label>A l'issus des votes le vainqueur est :</label>
+          <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                    <th>Nom Candidat</th><th>Nombre de voix maximal</th>
+                </tr>
+              </thead>
+              <tbody>
+              <tr>
+                  <td th:text="${candidatGagnant.name}"></td><td th:text="${candidatGagnant.voix}"></td>
+              </tr>
+              </tbody>
+          </table>
+      </div>
+
+  </div>
+      <div>
+          <label>Supervisé par: </label> <label th:text="${name}"></label>
+          <label class="pull-right" th:text="${dateE}"></label>
+      </div>
+
+</body>
+</html>
